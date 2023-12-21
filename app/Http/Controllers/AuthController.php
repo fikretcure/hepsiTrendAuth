@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Managements\ExitManagement;
+use App\Http\Managements\UserManagement;
 use App\Http\Repositories\UserRepository;
 use App\Http\Requests\LoginAuthRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\ValidationException;
 
 /**
  *
@@ -20,32 +22,41 @@ class AuthController
     public UserRepository $userRepository;
 
     /**
+     * @var UserManagement
+     */
+    public UserManagement $userManagement;
+
+    /**
      *
      */
     public function __construct()
     {
         $this->userRepository = new UserRepository();
+        $this->userManagement = new UserManagement();
     }
 
     /**
      * @param LoginAuthRequest $request
      * @return JsonResponse
+     * @throws ValidationException
      */
     public function login(LoginAuthRequest $request): JsonResponse
     {
         $user = $this->userRepository->getByEmail($request->email);
-        if (!($user && md5($request->password) == $user->password)) {
-            return ExitManagement::error('Bilgilerinizi kontrol etmelisiniz !');
-        }
-        $token = (string)Str::uuid();
-        Cache::put('bearer' . $user->id, $token);
-
-        return ExitManagement::ok($token);
+        $this->userManagement->checkPassword($user, $request->password);
+        Auth::loginUsingId($user->id);
+        return ExitManagement::ok($request->user()->createToken('api')->plainTextToken);
     }
 
-
-    public function details()
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function checkToken(Request $request)
     {
-        return ExitManagement::ok();
+        return ExitManagement::ok([
+            'user' => auth()->user(),
+            'roles' => collect(auth()->user()->roles)->pluck('id')
+        ]);
     }
 }

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,3 +18,7 @@ Route::name("auth.")->prefix('auth')->controller(AuthController::class)->group(f
     Route::post('login', 'login')->name('login');
     Route::post('logout', 'logout')->name('logout');
 });
+
+
+
+Route::middleware('auth:sanctum')->post('auth/check-token', [AuthController::class, 'checkToken']);
