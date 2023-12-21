@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
         Role::create([
             'name' => 'Master Admin'
         ]);
@@ -44,6 +43,5 @@ class DatabaseSeeder extends Seeder
             'email' => 'fikretcure@gmail.com',
             'password' => md5('Ht2023!')
         ])->roles()->attach(3);
-
     }
 }
