@@ -48,15 +48,15 @@ class AuthController
         return ExitManagement::ok($request->user()->createToken('api')->plainTextToken);
     }
 
+
     /**
-     * @param Request $request
      * @return JsonResponse
      */
-    public function checkToken(Request $request)
+    public function checkToken(): JsonResponse
     {
         return ExitManagement::ok([
             'user' => auth()->user(),
-            'roles' => collect(auth()->user()->roles)->pluck('id')
+            'role_ids' => collect(auth()->user()->roles)->pluck('id')
         ]);
     }
 }
