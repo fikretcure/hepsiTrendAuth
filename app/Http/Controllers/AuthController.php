@@ -56,7 +56,8 @@ class AuthController
     {
         return ExitManagement::ok([
             'user' => auth()->user(),
-            'role_ids' => collect(auth()->user()->roles)->pluck('id')
+            'role_ids' => collect(auth()->user()->roles)->pluck('id'),
+            'status' => true
         ]);
     }
 }
