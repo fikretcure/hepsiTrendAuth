@@ -38,10 +38,35 @@ class DatabaseSeeder extends Seeder
             'password' => md5('Ht2023!')
         ])->roles()->attach(2);
 
-        User::create([
-            'name' => 'Orhan',
-            'email' => 'fikretcure@gmail.com',
+
+        $user = User::create([
+            'name' => 'Firtina',
+            'email' => 'firtina@gmail.com',
             'password' => md5('Ht2023!')
-        ])->roles()->attach(3);
+        ]);
+        $user->roles()->attach(3);
+        $user->iban()->create([
+            'iban' => uniqid()
+        ]);
+
+        $user = User::create([
+            'name' => 'Semih',
+            'email' => 'semih@gmail.com',
+            'password' => md5('Ht2023!')
+        ]);
+        $user->roles()->attach(3);
+        $user->iban()->create([
+            'iban' => uniqid()
+        ]);
+
+        $user = User::create([
+            'name' => 'Meltem',
+            'email' => 'meltem@gmail.com',
+            'password' => md5('Ht2023!')
+        ]);
+        $user->roles()->attach(3);
+        $user->iban()->create([
+            'iban' => uniqid()
+        ]);
     }
 }
