@@ -70,6 +70,6 @@ class DatabaseSeeder extends Seeder
             'iban' => uniqid()
         ]);
 
-        Redis::set('users', json_encode(User::query()->get()));
+        Redis::set('users', json_encode(User::select('id','name','email')->get()));
     }
 }
