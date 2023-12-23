@@ -15,7 +15,9 @@ class ExitManagement
      */
     public static function ok($data = null)
     {
-        return response()->json($data);
+        return response()->json([
+            'data' => $data
+        ]);
     }
 
 
