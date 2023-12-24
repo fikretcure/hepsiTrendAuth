@@ -8,7 +8,6 @@ use App\Http\Repositories\UserRepository;
 use App\Http\Requests\LoginAuthRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\ValidationException;
 
 /**

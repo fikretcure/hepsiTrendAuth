@@ -6,7 +6,6 @@ namespace Database\Seeders;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Redis;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,53 +22,21 @@ class DatabaseSeeder extends Seeder
             'name' => 'Customer'
         ]);
 
-        Role::create([
-            'name' => 'Expert'
-        ]);
 
-        User::create([
+        $user = User::create([
             'name' => 'Fikret',
             'email' => 'career@fikretcure.dev',
             'password' => md5('Ht2023!')
-        ])->roles()->attach(1);
+        ]);
+
+        $user->roles()->attach(1);
+        $user->roles()->attach(2);
+
 
         User::create([
             'name' => 'Emre',
             'email' => 'info@fikretcure.dev',
             'password' => md5('Ht2023!')
         ])->roles()->attach(2);
-
-
-        $user = User::create([
-            'name' => 'Firtina',
-            'email' => 'firtina@gmail.com',
-            'password' => md5('Ht2023!')
-        ]);
-        $user->roles()->attach(3);
-        $user->iban()->create([
-            'iban' => uniqid()
-        ]);
-
-        $user = User::create([
-            'name' => 'Semih',
-            'email' => 'semih@gmail.com',
-            'password' => md5('Ht2023!')
-        ]);
-        $user->roles()->attach(3);
-        $user->iban()->create([
-            'iban' => uniqid()
-        ]);
-
-        $user = User::create([
-            'name' => 'Meltem',
-            'email' => 'meltem@gmail.com',
-            'password' => md5('Ht2023!')
-        ]);
-        $user->roles()->attach(3);
-        $user->iban()->create([
-            'iban' => uniqid()
-        ]);
-
-        Redis::set('users', json_encode(User::select('id','name','email')->get()));
     }
 }
