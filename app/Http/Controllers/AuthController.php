@@ -59,4 +59,15 @@ class AuthController
             'status' => true
         ]);
     }
+
+    /**
+     * @return JsonResponse
+     */
+    public function logout(): JsonResponse
+    {
+        auth()->user()->tokens()->delete();
+        return ExitManagement::ok([
+            'status' => true
+        ]);
+    }
 }

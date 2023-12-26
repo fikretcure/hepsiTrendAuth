@@ -16,9 +16,9 @@ use Illuminate\Http\Request;
 
 Route::name("auth.")->prefix('auth')->controller(AuthController::class)->group(function () {
     Route::post('login', 'login')->name('login');
-    Route::post('logout', 'logout')->name('logout');
 });
 
-
-
-Route::middleware('auth:sanctum')->post('auth/check-token', [AuthController::class, 'checkToken']);
+Route::middleware('auth:sanctum')->name("auth.")->prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::post('check-token', 'checkToken')->name('checkToken');
+    Route::post('logout', 'logout')->name('logout');
+});
