@@ -22,20 +22,18 @@ class DatabaseSeeder extends Seeder
             'name' => 'Customer'
         ]);
 
-
         $user = User::create([
             'name' => 'Fikret',
-            'email' => 'career@fikretcure.dev',
+            'email' => env('MASTER_ADMIN_EMAIL', 'fikretcure@gmail.com'),
             'password' => md5('Ht2023!')
         ]);
 
         $user->roles()->attach(1);
         $user->roles()->attach(2);
 
-
         User::create([
             'name' => 'Emre',
-            'email' => 'info@fikretcure.dev',
+            'email' => env('CUSTOMER_EMAIL', 'career@fikretcure.dev'),
             'password' => md5('Ht2023!')
         ])->roles()->attach(2);
     }
